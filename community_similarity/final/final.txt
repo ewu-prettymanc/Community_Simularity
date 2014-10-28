@@ -1,0 +1,42 @@
+INTRO:
+
+We are going to write a program that predicts per capita crime.   The idea
+is that a user can enter in numerical information about a community, and
+we can prodvide a prediction about their per capital crime rate. 
+
+DETAILS:
+
+So, here is what we will do.  
+
+
+1) I have a data set that contains a collection of communities 
+and their crimate rates ("communities.data") Each line of the file
+describes one community. The amount of data per community is insane.
+Check out communities.names for a complete description. If a
+value is unkown, it is represented with a question mark.
+
+
+2) When the program starts, read the data file into a data base.  Your 
+data base should be an array of structures. 
+
+
+3) Then ask the user to enter in the data for the community they are worried
+about.  Allow them to enter ? if they don't know.  Please be nice to the
+user and display helpful questions.  
+
+Then find and print the crime rate, the name, and closeness of the community
+in our data base that is closest to the community the user entered.
+When computing closeness, we will use the geometric distance between the
+numeric values of the communities ( exlcuding the attributes: state,
+county, community, and fold ).  
+
+4) After one print is done, ask the user if they would like another.
+
+5) Misc:  
+   a) use a makefile, 2 .h files, 3.cpp files ( min )
+   b) must NO STATIC arrays in the structure and the array of structures
+      must also be dynamic
+   c) all malloc'd memory must be free'd
+   d) a design document called DESGIN.txt
+   e) good style
+   f) NO LATE DAYS ALLOWED ON THIS ONE.  IF YOU ARE LATE, YOU GET A ZERO.

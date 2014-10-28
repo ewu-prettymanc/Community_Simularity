@@ -1,0 +1,60 @@
+INTRO:
+
+We are going to write a program that predicts per capita crime.   The idea
+is that a user can enter in numerical information about a community, and
+we can prodvide a prediction about their per capital crime rate. 
+
+DETAILS:
+
+So, here is what we will do.  
+
+
+1) I have a data set that contains a collection of communities 
+and their crimate rates ("communities.data") Each line of the file
+describes one community. The amount of data per community is insane.
+Check out communities.names for a complete description. The first attribute
+is the crime rate.  The second and the third attributes are often unknown
+( represented with a question mark )
+
+
+
+   Each line contains 16 peices
+of information.    I have no idea what most of that information is.  They
+wouldn't tell me.  All they would tell me is that the last symbol in the line
+is a + ( if the person paid back the loan ) or a - ( if they did not pay off theloan).
+
+
+All I could find about the rest of the attributes is:
+
+    A1:	b, a, z
+    A2:	continuous.
+    A3:	continuous.
+    A4:	u, y, l, t, z
+    A5:	g, p, gg, z
+    A6:	c, d, cc, i, j, k, m, r, q, w, x, e, aa, ff, z
+    A7:	v, h, bb, j, n, z, dd, ff, o, z
+    A8:	continuous.
+    A9:	t, f, z
+    A10:	t, f, z
+    A11:	continuous.
+    A12:	t, f, z
+    A13:	g, p, s, z
+    A14:	continuous.
+    A15:	continuous.
+    A16: +,-         (class attribute)
+
+
+
+
+2) When the program starts, read the file crx.csv into a data base.  Your 
+data base should be an array of structures. 
+
+
+3) When someone wants to apply for credit, we collect all the information 
+about them that we can.  Unfortunately, this will be a bit annoying for our
+user ( For A1, is the applicant b, a, or z? For A4, is the applicant u,u
+l,t, or z).  For the continuous attributes, please tell the user the
+historical min, max, and standard deviation of that attribute. 
+
+4) Then search the array for the example that best matches the current 
+applicant.   

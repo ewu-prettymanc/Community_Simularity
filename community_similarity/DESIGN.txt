@@ -1,0 +1,216 @@
+Description/Requirments:
+We are going to write a program that predicts per capita crime.   The idea
+is that a user can enter in numerical information about a community, and
+we can provide a prediction about their per capital crime rate.
+
+/* Main
+1) run one computation					(F)
+2) ask the user if they would like to go again		(F)
+3) while the user wants to go again repeat steps 1-3	(L)
+
+**********************************************************
+
+/* Step 1 of Main
+name: compute
+desc: Declares a structure for the data, the user,and for the names. It calls a 
+function to construct the structures. It than gets data from the user. And matches 
+that data with a town which has the most similar data. It than prints out the name
+of that town and its capita crime rate. 
+params: none
+returns: void
+1) struct data *d, struct data * user, struct names *n;
+2) constructs the data array d				(F)
+3) conscturcts the names array n			(F)
+4) gets user action/data       				(F)
+5) matches the user data with a town			(F)
+6) tell the user about a town which matches 		(F)
+7) free data 	 					(F)
+8) free names
+
+
+
+*************************************************************
+/* Step 2 of compute
+name: construct_data
+desc: reads in all the towns' data from a file and stores it in an array of 
+structures. It needs to get the length of the file and than allocate an array
+of structues that long. It will return this array and will close the input file.
+params: int *d_length
+returns struct data *
+1) declare the FILE *in, and Struct data *
+2) open the input file named 'communities.data'
+3) get the length of the file and store it in *d_length		(F)
+4) rewind the file so we can reread it
+5)  allocate the array of structures *d_length
+6) for (i=0 i<*d_length i++) do step 7				(L)
+7) d[i] gets the address of the return of read_in_data 		(F)
+/
+
+/* Step 3 of compute
+name: calc_file_length
+desc: calculates how many lines are in a file and returns that number
+params: FILE * in
+returns int
+1) declare a char c[SIZE];
+2) while (fgets(c, SIZE, in  do step 3				(L)
+3) lines ++
+4) return lines
+
+
+/* Step 7 of compute
+name: read_in_data
+desc: declares a structure d. It reads in the data from the file storing it in that 
+structure. It reads a line of data into the buffer. It than parses that file reading
+out the name and storing it in the structure. It than reads out all of the number
+data storing it in the structure. 
+params: FILE * in
+1) declare a struct data * d, and a char buffer[SIZE]
+2) allocate the stucture
+3) get the next line of the file storing it into the buffer
+4) read throught the buffer until we get to comma #3 storing that value
+in start. Than read until comman #4 storing that into end.   	  (L)
+5) copy the data between start and end and store that into d->communityname (F)
+6) starting at end read through the buffer do step 7  	   		    (L)
+7) get the info from the file
+8) return d
+*/ 
+
+
+/* Step 7 of read_in_data
+name: get_info
+desc: Allocate the d-> array .reads in the doubles from the buffer storing them into 
+d->info[i]. Do this by reading through the buffer until it comes to a comman. Copy 
+the data between each comma and convert it into a double than store it into info[i]. 
+params: FILE * in, struct data *d, int end, int start, char *buffer 
+returns: void
+1) allocate the d-> info array of SIZE_INFO
+2) go through the buffer until we get to another comma  storing that in end (L)
+3) if buffer[end] == '\n' than copy start-end into the d->capitacrime and break
+4) if the buffer[start+1] == '?' than give the next d->info[] element -10
+5) else convert the data between start and end by step 11
+6) call get_double and store that data in the next d->info[] element	     (F)
+*/
+
+
+/* Step 5 of read_in_data
+name: copy_string
+desc: copies the data from the start to the end  of the buffer given storing it into
+the char *  given;
+params: char * from, int start, int end, char * to
+returns: void
+1) read through the buffer from start to end copying that data into to;
+2) null terminate the end of the string in to
+
+
+/* Step 11 of read_in_data
+name: get_double
+desc: given a buffer and the start and end points. It reads the data from start to
+end and converts that data into a double 
+params: char * from, int start, int end
+returns: double 
+1) copy from[start] from[end] into a char[] to 
+2) null terminate the string in 'to'
+3) call atof(to) storing its return into num
+4) return num 
+
+******************************************************************************
+
+/* Step 3 of compute
+name: construct_names
+desc: Reads the names of the variables into an array of structures.Each structure 
+containging a char array; 
+params: int *n_length 
+returns: struct names *
+1) declare a struct names *n, a buffer[] and a in_file_name[]
+2) open the innames file with a file name of names.data			
+3) find the length of the file and store that in *n_length 
+4) allocate the names structure n
+5) rewind the file
+6) for(i=0; i<*n_lenght; i++) do step 7
+7) read the names from the structure                                      (F)
+8) fclose(innames)
+9) return n
+
+/* Step 8 of construct_names
+names: read_names:
+desc: Allocate an array of char of SIZE_NAME and reads in the names from the file 
+given storing it into the n->names
+params: FILE * innames, struct names *n
+returns: void 
+*/ 
+
+
+
+**********************************************************************************
+/*Step 4 of compute
+name: get_user
+desc: Given a pointer to a structure and an array of name structures, and the 
+structure length. It allocates a data structure user. Than prints out which piece of
+ data we want to read from the userand reads that piece storing it into the correct
+ place in the user structure
+params: struct names *n, int n_length
+returns: struct data 8
+1) declare struct data * user
+2) ask the user to enter names[0].names data
+3) read the data from the user stroing it into the correct element of user
+4) return user; 
+
+***********************************************************************************
+/* step 5 of compute
+name: find_town_match
+desc: for each element of the data d array given find the distance between the 
+coorisponding user element. The whole time keeping track of the town with the 
+closest distance. When we've checked all the elements in the data d array return
+which element has the closest distance
+params: struct data *d, struct data * user, int n_length, int d_length
+returns: int 
+1) give best_dist the value between the the user and the first d element	(F)
+2) for( i=1; i < d_length; i++ ) do step 3 
+3) calculate the distance from the d[i] element and the user
+4) if that distance is smaller then best_best that value and change which to i
+5) return which
+
+
+/* Step 1 of find_town_match
+name: get_distance
+desc: loop sum up the value of the (distance between user and d ) squared. The
+distance is the square root of distance sum. 
+params: struct data *d, struct data * user, int n_length
+return: double
+1) for(i=0; i<n_length; i ++ ) do step 2 
+2) temp += the distance between user[i] and d[i] squared
+3) return the square root of the temp 
+
+****************************************************************************
+
+/* Step 6  of compute
+name: tell_user
+desc: tells the user which town theirs was like. It also prints out the crime per
+captita value of that town 
+params: struct data *d, struct data *user, int n_length, int match 
+returns: void
+1) printf("The data fro the town %s that you entered matches \n", 
+   user->communityname);
+2)  printf(" town %s which has a crime rate percap of %lf:\n"
+	 , d[match].communityname, d[match].percapita_crime ); 
+
+
+****************************************************************************
+
+/*Step 7 of compute
+name: free_data
+desc: for each element  of the struct data * d give, free communityname and info
+params: struct data * d, int d_length
+returns: void
+1) for(i=0; i<d_length; i++) do step 2
+2) free d[i].communityname, free d[i].info
+3) free d
+
+/* Step 8 of compute
+name: free_names
+desc: for each element of the struct names * n free names.
+params: struct names *n, int n_length
+returns: void
+1) for( i=0; i<n_length; i++)
+2) free n[i].names
+3) free n
